@@ -1,0 +1,40 @@
+"use client";
+
+import { Award, Lock, Sparkles } from "lucide-react";
+import { Bar, BarChart, CartesianGrid, Cell, Pie, PieChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
+import { Card } from "@/components/ui/card";
+import { Progress } from "@/components/ui/progress";
+import { difficultyCounts, longestStreak, monthData, solvedProblems, streak } from "@/lib/analytics";
+import { Phase } from "@/lib/types";
+import { SectionHeading } from "@/components/roadmap";
+
+const palette = ["#34D399", "#FBBF24", "#FB7185"];
+const tooltipStyle = { background: "#0b100d", border: "1px solid rgba(255,255,255,.09)", borderRadius: 8, fontSize: 10 };
+
+export function AnalyticsPanel({ phases }: { phases: Phase[] }) {
+  const solved = solvedProblems(phases); const months = monthData(phases); const diff = difficultyCounts(solved);
+  const topics = Object.entries(solved.reduce<Record<string, number>>((acc, p) => ({ ...acc, [p.topic]: (acc[p.topic] ?? 0) + 1 }), {})).map(([name, value]) => ({ name, value })).sort((a,b) => b.value - a.value).slice(0, 6);
+  return <section id="analytics" className="scroll-mt-24 pt-20"><SectionHeading eyebrow="Signal analysis" title="See the shape of your work" copy="Trends reveal what motivation hides: where your practice compounds and where the next useful challenge lives." />
+    <div className="grid gap-3 lg:grid-cols-2 xl:grid-cols-3">
+      <ChartCard title="Problems per month" subtitle="Last 6 months" className="xl:col-span-2"><ResponsiveContainer width="100%" height={220}><BarChart data={months}><CartesianGrid stroke="rgba(255,255,255,.04)" vertical={false} /><XAxis dataKey="month" tick={{ fill: "#58615c", fontSize: 9 }} axisLine={false} tickLine={false} /><YAxis allowDecimals={false} tick={{ fill: "#58615c", fontSize: 9 }} axisLine={false} tickLine={false} /><Tooltip contentStyle={tooltipStyle} cursor={{ fill: "rgba(155,255,46,.03)" }} /><Bar dataKey="solved" fill="#9BFF2E" radius={[5,5,0,0]} maxBarSize={32} /></BarChart></ResponsiveContainer></ChartCard>
+      <ChartCard title="Difficulty distribution" subtitle={`${solved.length} solved`}><ResponsiveContainer width="100%" height={220}><PieChart><Pie data={diff} dataKey="value" nameKey="name" innerRadius={55} outerRadius={78} paddingAngle={4} stroke="none">{diff.map((_, i) => <Cell key={i} fill={palette[i]} />)}</Pie><Tooltip contentStyle={tooltipStyle} /></PieChart></ResponsiveContainer><div className="flex justify-center gap-4">{diff.map((d,i) => <span key={d.name} className="text-[9px] text-zinc-600"><i className="mr-1.5 inline-block size-1.5 rounded-full" style={{ background: palette[i] }} />{d.name} {d.value}</span>)}</div></ChartCard>
+      <ChartCard title="Topic distribution" subtitle="Strongest patterns"><div className="space-y-3 pt-3">{topics.length ? topics.map((topic, i) => <div key={topic.name}><div className="mb-1.5 flex justify-between text-[9px]"><span className="text-zinc-500">{topic.name}</span><span className="text-zinc-600">{topic.value}</span></div><Progress value={(topic.value / Math.max(...topics.map(t => t.value))) * 100} indicatorClassName={i ? "bg-sky-400" : "bg-lime"} /></div>) : <EmptyState />}</div></ChartCard>
+      <ChartCard title="Streak history" subtitle="Your consistency"><div className="grid h-[220px] place-items-center"><div className="text-center"><div className="text-5xl font-bold text-gradient">{streak(phases)}</div><p className="mt-2 text-[9px] uppercase tracking-[.2em] text-zinc-600">current streak</p><div className="mx-auto my-5 h-px w-20 bg-white/[.07]" /><p className="text-xs text-zinc-500">Best run <span className="text-white">{longestStreak(phases)} days</span></p></div></div></ChartCard>
+      <ChartCard title="Phase completion" subtitle="Roadmap coverage"><div className="space-y-2.5 pt-2">{phases.map((phase) => { const percent = Math.round(phase.problems.filter(p => p.completed).length / phase.target * 100); return <div key={phase.id} className="grid grid-cols-[20px_1fr_32px] items-center gap-2"><span className="text-[9px] text-zinc-700">{phase.id.toString().padStart(2, "0")}</span><Progress value={percent} indicatorClassName="bg-current" /><span className="text-right text-[9px] text-zinc-600">{percent}%</span></div>; })}</div></ChartCard>
+    </div>
+  </section>;
+}
+
+function ChartCard({ title, subtitle, className, children }: { title: string; subtitle: string; className?: string; children: React.ReactNode }) { return <Card className={className}><div className="flex items-start justify-between p-5 pb-1"><div><p className="text-sm font-semibold">{title}</p><p className="mt-1 text-[9px] uppercase tracking-wider text-zinc-700">{subtitle}</p></div><span className="size-1.5 rounded-full bg-lime shadow-[0_0_7px_#9BFF2E]" /></div><div className="px-5 pb-5">{children}</div></Card>; }
+function EmptyState() { return <div className="grid h-44 place-items-center text-center"><div><Sparkles size={18} className="mx-auto text-zinc-700" /><p className="mt-3 text-[10px] text-zinc-600">Solve your first problem<br />to light up this chart.</p></div></div>; }
+
+const badges = [
+  ["First Problem", "Complete one problem", 1, "any"], ["7 Day Streak", "Show up seven days", 7, "streak"], ["30 Day Streak", "Thirty days, unbroken", 30, "streak"],
+  ["50 Problems", "Cross the fifty mark", 50, "any"], ["100 Problems", "Enter triple digits", 100, "any"], ["Arrays Master", "Complete Phase 01", 1, "phase"],
+  ["Graph Explorer", "Complete Phase 08", 8, "phase"], ["DP Warrior", "Complete Phase 09", 9, "phase"],
+] as const;
+
+export function Achievements({ phases }: { phases: Phase[] }) {
+  const solved = solvedProblems(phases).length; const currentStreak = streak(phases);
+  return <section id="achievements" className="scroll-mt-24 pb-10 pt-20"><SectionHeading eyebrow="Milestones" title="Achievements" copy="Quiet evidence of the person you are becoming, one deliberate repetition at a time." /><div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">{badges.map(([name, description, threshold, type]) => { const unlocked = type === "streak" ? currentStreak >= threshold : type === "phase" ? phases[threshold - 1].problems.filter(p => p.completed).length >= phases[threshold - 1].target : solved >= threshold; return <Card key={name} className={`glass-highlight p-4 transition ${unlocked ? "border-lime/20 shadow-glow" : "opacity-55"}`}><div className="flex items-start gap-3"><div className={`grid size-10 shrink-0 place-items-center rounded-xl border ${unlocked ? "border-lime/25 bg-lime/10 text-lime" : "border-white/[.07] bg-white/[.025] text-zinc-700"}`}>{unlocked ? <Award size={18} /> : <Lock size={15} />}</div><div><p className="text-xs font-semibold">{name}</p><p className="mt-1 text-[9px] leading-4 text-zinc-600">{description}</p><p className={`mt-2 text-[8px] uppercase tracking-widest ${unlocked ? "text-lime" : "text-zinc-700"}`}>{unlocked ? "unlocked" : "locked"}</p></div></div></Card>; })}</div></section>;
+}

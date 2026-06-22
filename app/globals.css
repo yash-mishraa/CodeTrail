@@ -1,0 +1,31 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root { color-scheme: dark; }
+* { border-color: rgba(255,255,255,.08); }
+html { scroll-behavior: smooth; }
+body {
+  background: #070a09;
+  color: #f4f7f5;
+  min-height: 100vh;
+  font-feature-settings: "liga" 1, "calt" 1;
+}
+body::before {
+  content: ""; position: fixed; inset: 0; pointer-events: none; z-index: -1;
+  background: radial-gradient(circle at 18% -10%, rgba(155,255,46,.08), transparent 30%), radial-gradient(circle at 100% 20%, rgba(56,189,248,.04), transparent 28%), linear-gradient(rgba(255,255,255,.012) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.012) 1px, transparent 1px);
+  background-size: auto, auto, 32px 32px, 32px 32px;
+}
+::selection { background: rgba(155,255,46,.25); color: white; }
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-track { background: #070a09; }
+::-webkit-scrollbar-thumb { background: #253027; border-radius: 999px; }
+.text-gradient { background: linear-gradient(135deg, #fff 20%, #9BFF2E 95%); -webkit-background-clip: text; color: transparent; }
+.glass-highlight { position: relative; overflow: hidden; }
+.glass-highlight::after { content: ""; position: absolute; inset: 0; pointer-events: none; background: linear-gradient(120deg, rgba(255,255,255,.045), transparent 32%); }
+.heat-0 { background: rgba(255,255,255,.045); }
+.heat-1 { background: rgba(155,255,46,.25); }
+.heat-2 { background: rgba(155,255,46,.48); }
+.heat-3 { background: rgba(155,255,46,.72); }
+.heat-4 { background: #9BFF2E; box-shadow: 0 0 8px rgba(155,255,46,.4); }
+input[type="date"]::-webkit-calendar-picker-indicator { filter: invert(1); opacity: .5; }
