@@ -1,17 +1,120 @@
 "use client";
 
-import { AnimatePresence, motion } from "framer-motion";
-import { Activity } from "@/components/activity";
-import { Achievements, AnalyticsPanel } from "@/components/analytics-panel";
-import { AppShell } from "@/components/app-shell";
-import { DashboardHero } from "@/components/dashboard-hero";
-import { Roadmap } from "@/components/roadmap";
-import { UpNext } from "@/components/up-next";
-import { useTracker } from "@/hooks/use-tracker";
+import { Terminal, Code2, Rocket, Database, LayoutDashboard } from "lucide-react";
+import { SignInButton, useAuth } from "@clerk/nextjs";
+import Link from "next/link";
+import Image from "next/image";
+import { useEffect, useState } from "react";
 
-export default function HomePage() {
-  const { state, hydrated } = useTracker();
-  return <AppShell><AnimatePresence mode="wait">{!hydrated ? <Loading /> : <motion.div key="dashboard" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: .35 }} className="mx-auto max-w-[1480px]"><DashboardHero phases={state.phases} /><UpNext /><Roadmap /><Activity phases={state.phases} /><AnalyticsPanel phases={state.phases} /><Achievements phases={state.phases} /><footer className="border-t border-white/[.06] py-8 text-center text-[9px] uppercase tracking-[.2em] text-zinc-700">CodeTrail // built for the long game</footer></motion.div>}</AnimatePresence></AppShell>;
+const codeSnippet = `const CodeTrail = {
+  status: "Optimized",
+  problems: 501,
+  patterns: 80,
+  init: async () => {
+    await compileSuccess();
+    return masterDSA();
+  }
+};`;
+
+export default function LandingPage() {
+  const { userId } = useAuth();
+  const [typedText, setTypedText] = useState("");
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => { setMounted(true); }, []);
+
+  useEffect(() => {
+    let i = 0;
+    const interval = setInterval(() => {
+      setTypedText(codeSnippet.slice(0, i));
+      i++;
+      if (i > codeSnippet.length) clearInterval(interval);
+    }, 40);
+    return () => clearInterval(interval);
+  }, []);
+
+  return (
+    <div className="relative min-h-screen overflow-hidden bg-[#0a0f0c] text-zinc-300">
+      <style jsx>{`
+        @keyframes fadeUp {
+          from { opacity: 0; transform: translateY(20px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes scaleIn {
+          from { opacity: 0; transform: scale(0.95); }
+          to { opacity: 1; transform: scale(1); }
+        }
+        @keyframes blink {
+          0%, 100% { opacity: 0; }
+          50% { opacity: 1; }
+        }
+        .anim-fade-up { animation: fadeUp 0.8s ease-out forwards; opacity: 0; }
+        .anim-scale-in { animation: scaleIn 0.8s ease-out forwards; opacity: 0; }
+        .anim-blink { animation: blink 0.8s infinite; }
+        .delay-200 { animation-delay: 0.2s; }
+        .delay-400 { animation-delay: 0.4s; }
+        .delay-600 { animation-delay: 0.6s; }
+        .delay-1000 { animation-delay: 1s; }
+        .delay-1500 { animation-delay: 1.5s; }
+      `}</style>
+
+      {/* Glowing Orbs */}
+      <div className="absolute top-1/4 left-1/4 h-96 w-96 rounded-full bg-lime/20 blur-[120px] mix-blend-screen"></div>
+      <div className="absolute bottom-1/4 right-1/4 h-96 w-96 rounded-full bg-cyan-500/10 blur-[120px] mix-blend-screen"></div>
+
+      <div className="relative mx-auto flex max-w-7xl flex-col items-center justify-center min-h-screen px-6 py-24 sm:py-32 lg:px-8 text-center">
+        
+        <div className={mounted ? "anim-fade-up mb-8 flex items-center justify-center gap-3" : "opacity-0 mb-8"}>
+          <div className="grid size-16 place-items-center rounded-2xl shadow-[0_0_30px_rgba(155,255,46,0.2)]">
+            <Image src="/logo.png" alt="CodeTrail Logo" width={64} height={64} className="rounded-2xl" />
+          </div>
+        </div>
+
+        <h1 className={mounted ? "anim-fade-up delay-200 max-w-4xl text-5xl font-bold tracking-tight text-white sm:text-7xl" : "opacity-0"}>
+          Master DSA with <span className="text-lime">Precision</span>
+        </h1>
+
+        <p className={mounted ? "anim-fade-up delay-400 mt-6 max-w-2xl text-lg leading-8 text-zinc-400" : "opacity-0"}>
+          The ultimate, intelligence-driven LeetCode tracker. 500+ problems, 80+ structural patterns, and real-time cloud synchronization.
+        </p>
+
+        {/* Animated Code Block */}
+        <div className={mounted ? "anim-scale-in delay-600 mt-12 w-full max-w-2xl overflow-hidden rounded-2xl border border-white/[.08] bg-black/50 backdrop-blur-xl shadow-2xl text-left" : "opacity-0"}>
+          <div className="flex items-center border-b border-white/[.08] px-4 py-3">
+            <div className="flex gap-2">
+              <div className="size-3 rounded-full bg-red-500/80"></div>
+              <div className="size-3 rounded-full bg-yellow-500/80"></div>
+              <div className="size-3 rounded-full bg-green-500/80"></div>
+            </div>
+            <div className="ml-4 flex items-center gap-2 text-xs text-zinc-500">
+              <Terminal size={14} /> system_init.ts
+            </div>
+          </div>
+          <div className="p-6 font-mono text-sm text-lime/90 min-h-[160px]">
+            <pre><code>{typedText}<span className="anim-blink">|</span></code></pre>
+          </div>
+        </div>
+
+        <div className={mounted ? "anim-fade-up delay-1000 mt-12 flex items-center justify-center gap-x-6" : "opacity-0"}>
+          {!userId ? (
+            <SignInButton mode="modal">
+              <button className="group relative inline-flex items-center justify-center gap-2 rounded-full bg-lime px-8 py-4 text-sm font-semibold text-black transition-all hover:bg-lime/90 hover:scale-105 hover:shadow-[0_0_40px_rgba(155,255,46,0.4)]">
+                Initialize System <Rocket size={16} className="transition-transform group-hover:translate-x-1" />
+              </button>
+            </SignInButton>
+          ) : (
+            <Link href="/dashboard" className="group relative inline-flex items-center justify-center gap-2 rounded-full bg-lime px-8 py-4 text-sm font-semibold text-black transition-all hover:bg-lime/90 hover:scale-105 hover:shadow-[0_0_40px_rgba(155,255,46,0.4)]">
+              Access Dashboard <LayoutDashboard size={16} className="transition-transform group-hover:translate-x-1" />
+            </Link>
+          )}
+        </div>
+
+        <div className={mounted ? "anim-fade-up delay-1500 mt-16 flex justify-center gap-8 text-zinc-500 text-sm border-t border-white/[.05] pt-8 max-w-2xl w-full" : "opacity-0"}>
+          <div className="flex items-center gap-2"><Database size={16} /> Real-time Cloud Sync</div>
+          <div className="flex items-center gap-2"><Code2 size={16} /> Structural Patterns</div>
+          <div className="flex items-center gap-2"><Terminal size={16} /> 100% Secure</div>
+        </div>
+      </div>
+    </div>
+  );
 }
-
-function Loading() { return <div className="grid min-h-[70vh] place-items-center"><div className="text-center"><div className="mx-auto size-8 animate-spin rounded-full border border-lime/20 border-t-lime" /><p className="mt-4 text-[9px] uppercase tracking-[.2em] text-zinc-700">Loading protocol</p></div></div>; }

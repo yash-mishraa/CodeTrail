@@ -29,3 +29,4 @@ body::before {
 .heat-3 { background: rgba(155,255,46,.72); }
 .heat-4 { background: #9BFF2E; box-shadow: 0 0 8px rgba(155,255,46,.4); }
 input[type="date"]::-webkit-calendar-picker-indicator { filter: invert(1); opacity: .5; }
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }

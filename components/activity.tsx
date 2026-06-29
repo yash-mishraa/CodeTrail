@@ -5,12 +5,16 @@ import { addMonths, eachDayOfInterval, endOfMonth, format, getDay, isSameDay, st
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { dailyCounts, heatmapDays } from "@/lib/analytics";
-import { Phase } from "@/lib/types";
+import { patternDailyCounts, patternHeatmapDays } from "@/lib/pattern-analytics";
+import { useTracker } from "@/hooks/use-tracker";
 import { SectionHeading } from "@/components/roadmap";
 
-export function Activity({ phases }: { phases: Phase[] }) {
-  const counts = dailyCounts(phases); const days = heatmapDays(phases); const total = Object.values(counts).reduce((a, b) => a + b, 0);
+export function Activity() {
+  const { state } = useTracker();
+  if (!state.patternCategories) return null;
+  const counts = patternDailyCounts(state.patternCategories); 
+  const days = patternHeatmapDays(state.patternCategories); 
+  const total = Object.values(counts).reduce((a, b) => a + b, 0);
   return <section id="activity" className="scroll-mt-24 pt-20"><SectionHeading eyebrow="Activity log" title="Consistency, visualized" copy="Every glowing square is proof that you showed up. Empty days are invitations, not verdicts." />
     <div className="grid gap-3 xl:grid-cols-[1.35fr_.65fr]">
       <Card className="overflow-hidden p-5"><div className="mb-5 flex items-center justify-between"><div><p className="text-[9px] uppercase tracking-[.18em] text-zinc-600">Contribution matrix</p><p className="mt-1 text-sm font-semibold">{total} submissions logged</p></div><div className="flex items-center gap-1 text-[9px] text-zinc-700"><span>Less</span>{[0,1,2,3,4].map((i) => <span key={i} className={`size-2.5 rounded-[2px] heat-${i}`} />)}<span>More</span></div></div>

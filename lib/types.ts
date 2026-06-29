@@ -29,5 +29,6 @@ export type Phase = {
 
 export type TrackerState = {
   phases: Phase[];
+  patternCategories?: import("@/lib/pattern-types").PatternCategory[];
   createdAt: string;
 };
