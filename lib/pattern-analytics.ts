@@ -54,7 +54,7 @@ export function patternLongestStreak(categories: PatternCategory[]) {
   const dates = Array.from(new Set(
     patternSolvedProblems(categories)
       .map((p) => p.solvedDate)
-      .filter(Boolean)
+      .filter((d): d is string => Boolean(d))
   )).sort();
   if (dates.length === 0) return 0;
   let max = 1; let current = 1;
