@@ -3,6 +3,7 @@
 import dynamic from "next/dynamic";
 import { AppShell } from "@/components/app-shell";
 import { DashboardHero } from "@/components/dashboard-hero";
+import { ReviewQueue } from "@/components/review-queue";
 import { WeeklyInsights } from "@/components/weekly-insights";
 import { useTracker } from "@/hooks/use-tracker";
 
@@ -33,6 +34,7 @@ export default function HomePage() {
     <AppShell>
       <div className="mx-auto max-w-[1480px] animate-[fadeIn_0.35s_ease-out]">
         <DashboardHero />
+        <ReviewQueue />
         <WeeklyInsights />
         <PatternRoadmap />
         <Activity />

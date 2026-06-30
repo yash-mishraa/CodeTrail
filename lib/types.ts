@@ -1,5 +1,14 @@
 export type Difficulty = "Easy" | "Medium" | "Hard";
 
+export type Template = {
+  id: string;
+  title: string;
+  code: string;
+  language: string;
+  tags: string[];
+  lastUpdated: string;
+};
+
 export type Problem = {
   id: string;
   name: string;
@@ -30,5 +39,6 @@ export type Phase = {
 export type TrackerState = {
   phases: Phase[];
   patternCategories?: import("@/lib/pattern-types").PatternCategory[];
+  templates?: Template[];
   createdAt: string;
 };

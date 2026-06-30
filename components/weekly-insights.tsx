@@ -36,7 +36,6 @@ export function WeeklyInsights() {
   const completedPats = completedPatternsCount(categories);
   const totalPats = totalPatternsCount(categories);
   const recentWeek = recentlyPracticed(categories, 7).length;
-  const hoursRemaining = Math.round(patternEstimatedTimeRemaining(categories));
 
   // Weakest category (lowest completion %)
   const categoryStats = categories.map(c => {
@@ -49,7 +48,7 @@ export function WeeklyInsights() {
   const strongest = categoryStats[categoryStats.length - 1];
 
   return (
-    <section className="mt-10 grid gap-3 lg:grid-cols-3">
+    <section className="mt-10 grid gap-3 lg:grid-cols-2">
       {/* Difficulty Breakdown */}
       <Card className="p-5">
         <div className="mb-4 flex items-center justify-between">
@@ -66,23 +65,6 @@ export function WeeklyInsights() {
         </div>
       </Card>
 
-      {/* Stat Grid */}
-      <Card className="p-5">
-        <div className="mb-4 flex items-center justify-between">
-          <div>
-            <p className="text-[9px] uppercase tracking-[.18em] text-zinc-600">Quick stats</p>
-            <h2 className="mt-1 text-sm font-semibold font-display">At a glance</h2>
-          </div>
-          <TrendingUp size={16} className="text-lime" />
-        </div>
-        <div className="grid grid-cols-2 gap-3">
-          <StatCell label="This week" value={recentWeek} unit="solved" />
-          <StatCell label="Patterns done" value={completedPats} unit={`/ ${totalPats}`} />
-          <StatCell label="Completion" value={`${overallPercent}%`} unit="overall" />
-          <StatCell label="Est. remaining" value={hoursRemaining} unit="hours" />
-        </div>
-      </Card>
-
       {/* Focus Areas */}
       <Card className="glass-highlight border-lime/10 p-5">
         <div className="mb-4 flex items-center justify-between">
@@ -93,26 +75,37 @@ export function WeeklyInsights() {
           <Brain size={16} className="text-lime" />
         </div>
         <div className="space-y-4">
-          <div className="rounded-xl border border-white/[.06] bg-black/20 p-3">
-            <div className="flex items-center gap-2 text-[9px] uppercase tracking-wider text-zinc-600">
-              <Zap size={10} className="text-rose-400" /> Needs work
+          {totalSolved === 0 ? (
+            <div className="grid h-[140px] place-items-center text-center">
+              <div>
+                <Zap size={18} className="mx-auto text-zinc-700" />
+                <p className="mt-3 text-[10px] text-zinc-600">Solve your first problem to<br />reveal strengths and gaps.</p>
+              </div>
             </div>
-            <p className="mt-2 text-xs font-semibold">{weakest.name}</p>
-            <div className="mt-2 flex items-center gap-2">
-              <Progress value={weakest.percent} indicatorClassName="bg-current" style={{ color: weakest.accent }} className="flex-1" />
-              <span className="text-[9px] text-zinc-600">{weakest.percent}%</span>
-            </div>
-          </div>
-          <div className="rounded-xl border border-lime/10 bg-lime/[.02] p-3">
-            <div className="flex items-center gap-2 text-[9px] uppercase tracking-wider text-zinc-600">
-              <Zap size={10} className="text-lime" /> Strongest
-            </div>
-            <p className="mt-2 text-xs font-semibold">{strongest.name}</p>
-            <div className="mt-2 flex items-center gap-2">
-              <Progress value={strongest.percent} indicatorClassName="bg-lime" className="flex-1" />
-              <span className="text-[9px] text-zinc-600">{strongest.percent}%</span>
-            </div>
-          </div>
+          ) : (
+            <>
+              <div className="rounded-xl border border-white/[.06] bg-black/20 p-3">
+                <div className="flex items-center gap-2 text-[9px] uppercase tracking-wider text-zinc-600">
+                  <Zap size={10} className="text-rose-400" /> Needs work
+                </div>
+                <p className="mt-2 text-xs font-semibold">{weakest.name}</p>
+                <div className="mt-2 flex items-center gap-2">
+                  <Progress value={weakest.percent} indicatorClassName="bg-current" style={{ color: weakest.accent }} className="flex-1" />
+                  <span className="text-[9px] text-zinc-600">{weakest.percent}%</span>
+                </div>
+              </div>
+              <div className="rounded-xl border border-lime/10 bg-lime/[.02] p-3">
+                <div className="flex items-center gap-2 text-[9px] uppercase tracking-wider text-zinc-600">
+                  <Zap size={10} className="text-lime" /> Strongest
+                </div>
+                <p className="mt-2 text-xs font-semibold">{strongest.name}</p>
+                <div className="mt-2 flex items-center gap-2">
+                  <Progress value={strongest.percent} indicatorClassName="bg-lime" className="flex-1" />
+                  <span className="text-[9px] text-zinc-600">{strongest.percent}%</span>
+                </div>
+              </div>
+            </>
+          )}
         </div>
       </Card>
     </section>
@@ -132,12 +125,3 @@ function DifficultyRow({ label, solved, total, color, barColor }: { label: strin
   );
 }
 
-function StatCell({ label, value, unit }: { label: string; value: string | number; unit: string }) {
-  return (
-    <div className="rounded-xl border border-white/[.05] bg-white/[.01] p-3 text-center">
-      <p className="text-lg font-bold tracking-tight">{value}</p>
-      <p className="text-[8px] uppercase tracking-widest text-zinc-600">{unit}</p>
-      <p className="mt-1 text-[8px] text-zinc-700">{label}</p>
-    </div>
-  );
-}

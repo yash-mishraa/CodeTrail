@@ -161,3 +161,35 @@ export function patternMonthData(categories: PatternCategory[]) {
   return result;
 }
 
+/* ── Spaced Repetition (Review Queue) ── */
+
+export function getProblemsForReview(categories: PatternCategory[]) {
+  const reviewQueue: { categoryId: string; patternId: string; problem: PatternProblem }[] = [];
+  const today = startOfDay(new Date());
+
+  for (const cat of categories) {
+    for (const pat of cat.patterns) {
+      for (const p of pat.problems) {
+        if (!p.completed || !p.solvedDate) continue;
+
+        // Spaced repetition intervals in days based on revisions count
+        const intervals = [3, 7, 14, 30]; 
+        const intervalDays = intervals[Math.min(p.revisions ?? 0, intervals.length - 1)];
+        
+        const nextReviewDate = subDays(today, intervalDays);
+        const solvedDate = startOfDay(new Date(p.solvedDate));
+        
+        if (solvedDate <= nextReviewDate) {
+          reviewQueue.push({ categoryId: cat.id, patternId: pat.id, problem: p });
+        }
+      }
+    }
+  }
+
+  return reviewQueue.sort((a, b) => {
+    // Sort by oldest solved date first
+    if (!a.problem.solvedDate || !b.problem.solvedDate) return 0;
+    return new Date(a.problem.solvedDate).getTime() - new Date(b.problem.solvedDate).getTime();
+  });
+}
+

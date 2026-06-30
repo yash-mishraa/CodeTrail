@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { ArrowUpRight, CheckCircle2, Flame, Gauge, Network, Target, Clock } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
+import { ShareStats } from "@/components/share-stats";
 import { useTracker } from "@/hooks/use-tracker";
 import {
   patternAllProblems,
@@ -45,7 +46,12 @@ export function DashboardHero() {
   return <section id="overview" className="scroll-mt-24">
     <div className="mb-8 flex flex-col justify-between gap-6 xl:flex-row xl:items-end">
       <div>
-        <div className="mb-3 flex items-center gap-2 text-[10px] uppercase tracking-[.25em] text-lime"><span className="h-px w-6 bg-lime" /> Deep Work Mode</div>
+        <div className="mb-4 flex items-center justify-between">
+          <div className="flex items-center gap-2 text-[10px] uppercase tracking-[.25em] text-lime">
+            <span className="h-px w-6 bg-lime" /> Deep Work Mode
+          </div>
+          <ShareStats />
+        </div>
         <h1 className="font-display text-3xl font-bold tracking-[-.04em] sm:text-4xl lg:text-5xl">Master the patterns.<br /><span className="text-gradient">Solve anything.</span></h1>
         <p className="mt-4 max-w-xl text-xs leading-6 text-zinc-500">Your daily systems dashboard for turning deliberate practice into lasting problem-solving instinct.</p>
       </div>
