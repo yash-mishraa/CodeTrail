@@ -46,7 +46,7 @@ export function DashboardHero() {
     <div className="mb-8 flex flex-col justify-between gap-6 xl:flex-row xl:items-end">
       <div>
         <div className="mb-3 flex items-center gap-2 text-[10px] uppercase tracking-[.25em] text-lime"><span className="h-px w-6 bg-lime" /> Deep Work Mode</div>
-        <h1 className="text-3xl font-bold tracking-[-.04em] sm:text-4xl lg:text-5xl">Master the patterns.<br /><span className="text-gradient">Solve anything.</span></h1>
+        <h1 className="font-display text-3xl font-bold tracking-[-.04em] sm:text-4xl lg:text-5xl">Master the patterns.<br /><span className="text-gradient">Solve anything.</span></h1>
         <p className="mt-4 max-w-xl text-xs leading-6 text-zinc-500">Your daily systems dashboard for turning deliberate practice into lasting problem-solving instinct.</p>
       </div>
       <Card className="glass-highlight max-w-xl border-lime/10 px-5 py-4 shadow-glow"><div className="flex items-start gap-3"><span className="text-2xl leading-none text-lime">“</span><div><p className="text-sm text-zinc-200">{quote}</p><p className="mt-2 text-[9px] uppercase tracking-[.2em] text-zinc-600">Today&apos;s terminal wisdom</p></div></div></Card>

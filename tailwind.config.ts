@@ -11,7 +11,10 @@ const config: Config = {
         lime: "#9BFF2E",
         muted: "#7c8b83",
       },
-      fontFamily: { mono: ["JetBrains Mono", "Fira Code", "Cascadia Code", "Consolas", "monospace"] },
+      fontFamily: {
+        mono: ["var(--font-mono)", "JetBrains Mono", "Fira Code", "Cascadia Code", "Consolas", "monospace"],
+        display: ["var(--font-display)", "Space Grotesk", "Inter", "system-ui", "sans-serif"],
+      },
       boxShadow: {
         glow: "0 0 24px rgba(155,255,46,.10)",
         "glow-strong": "0 0 32px rgba(155,255,46,.18)",

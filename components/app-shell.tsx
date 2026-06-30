@@ -30,9 +30,9 @@ export function AppShell({ children }: { children: React.ReactNode }) {
 
   return <div className="min-h-screen">
     <header className="fixed top-0 left-0 right-0 z-40 flex items-center justify-between px-6 py-4 bg-black/50 backdrop-blur-md border-b border-white/[.05]">
-      <div className="flex items-center gap-2">
-        <Image src="/logo.png" alt="CodeTrail Logo" width={32} height={32} className="rounded-lg" />
-        <span className="font-semibold text-sm">CodeTrail</span>
+      <div className="flex items-center gap-2.5">
+        <Image src="/logo.png" alt="CodeTrail Logo" width={40} height={40} className="rounded-lg" />
+        <span className="font-display font-bold text-base tracking-tight">CodeTrail</span>
       </div>
       <div className="flex items-center gap-4">
         {!userId ? (

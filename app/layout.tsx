@@ -1,6 +1,19 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { ClerkProvider } from '@clerk/nextjs'
+import { Space_Grotesk, JetBrains_Mono } from 'next/font/google';
+
+const spaceGrotesk = Space_Grotesk({
+  subsets: ['latin'],
+  variable: '--font-display',
+  display: 'swap',
+});
+
+const jetbrainsMono = JetBrains_Mono({
+  subsets: ['latin'],
+  variable: '--font-mono',
+  display: 'swap',
+});
 
 export const metadata: Metadata = {
   title: "CodeTrail — LeetCode Progress Tracker",
@@ -16,7 +29,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <ClerkProvider>
-      <html lang="en" className="dark">
+      <html lang="en" className={`dark ${spaceGrotesk.variable} ${jetbrainsMono.variable}`}>
         <body className="font-mono antialiased">
           {children}
         </body>
@@ -24,3 +37,4 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
     </ClerkProvider>
   );
 }
+

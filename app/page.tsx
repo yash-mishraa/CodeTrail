@@ -70,7 +70,7 @@ export default function LandingPage() {
           </div>
         </div>
 
-        <h1 className={mounted ? "anim-fade-up delay-200 max-w-4xl text-5xl font-bold tracking-tight text-white sm:text-7xl" : "opacity-0"}>
+        <h1 className={mounted ? "anim-fade-up delay-200 font-display max-w-4xl text-5xl font-bold tracking-tight text-white sm:text-7xl" : "opacity-0"}>
           Master DSA with <span className="text-lime">Precision</span>
         </h1>
 
