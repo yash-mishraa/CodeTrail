@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { ArrowUpRight, CheckCircle2, Flame, Gauge, Network, Target } from "lucide-react";
+import { ArrowUpRight, CheckCircle2, Flame, Gauge, Network, Target, Clock } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { useTracker } from "@/hooks/use-tracker";
@@ -60,7 +60,7 @@ export function DashboardHero() {
     </motion.div>)}</div>
     <div className="mt-3 grid gap-3 lg:grid-cols-[1.2fr_.8fr]">
       <Card className="p-5"><div className="mb-4 flex items-center justify-between"><div><p className="text-[9px] uppercase tracking-[.18em] text-zinc-600">Current Focus</p><p className="mt-1 text-sm font-semibold">{currCat.name}: {currPat.name}</p></div><span className="text-xs text-lime">{currPat.problems.filter(p => p.completed).length}/{currPat.problems.length}</span></div><Progress value={(currPat.problems.filter(p => p.completed).length / currPat.problems.length) * 100} /><div className="mt-3 flex justify-between text-[9px] text-zinc-600"><span>{currPat.problems.length - currPat.problems.filter(p => p.completed).length} problems to mastery</span><span>Last solved: {lastSolved}</span></div></Card>
-      <Card className="p-5"><div className="flex h-full items-center gap-5"><div className="grid size-11 place-items-center rounded-xl border border-lime/15 bg-lime/[.06] text-lime"><Target size={19} /></div><div className="flex-1"><p className="text-[9px] uppercase tracking-[.18em] text-zinc-600">Difficulty split</p><div className="mt-2 flex gap-5 text-xs"><span className="text-emerald-400">{difficulty[0]} <b className="font-normal text-zinc-600">easy</b></span><span className="text-amber-400">{difficulty[1]} <b className="font-normal text-zinc-600">medium</b></span><span className="text-rose-400">{difficulty[2]} <b className="font-normal text-zinc-600">hard</b></span></div></div></div></Card>
+      <Card className="p-5"><div className="flex h-full items-center gap-5"><div className="grid size-11 place-items-center rounded-xl border border-lime/15 bg-lime/[.06] text-lime"><Clock size={19} /></div><div className="flex-1"><p className="text-[9px] uppercase tracking-[.18em] text-zinc-600">Time to mastery</p><div className="mt-2 flex items-baseline gap-2"><span className="text-lg font-bold text-white">{Math.round(patternEstimatedTimeRemaining(categories))}</span><span className="text-[10px] text-zinc-500">hours of deliberate practice remaining</span></div></div></div></Card>
     </div>
   </section>;
 }

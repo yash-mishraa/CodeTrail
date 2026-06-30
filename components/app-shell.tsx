@@ -29,22 +29,34 @@ export function AppShell({ children }: { children: React.ReactNode }) {
   const results = query ? problems.filter((p) => `${p.name} ${p.topic} ${p.phase.name}`.toLowerCase().includes(query.toLowerCase())).slice(0, 7) : problems.filter((p) => !p.completed).slice(0, 5);
 
   return <div className="min-h-screen">
-    <header className="fixed top-0 left-0 right-0 z-40 flex items-center justify-between px-6 py-4 bg-black/50 backdrop-blur-md border-b border-white/[.05]">
-      <div className="flex items-center gap-2.5">
-        <Image src="/logo.png" alt="CodeTrail Logo" width={40} height={40} className="rounded-lg" />
-        <span className="font-brand font-bold text-base tracking-wide">CodeTrail</span>
+    <header className="fixed top-6 left-1/2 z-40 flex w-[92%] max-w-4xl -translate-x-1/2 items-center justify-between rounded-full border border-white/10 bg-[#0a0f0c]/90 px-3 py-2 shadow-[0_12px_40px_rgba(0,0,0,0.6)] backdrop-blur-xl supports-[backdrop-filter]:bg-[#0a0f0c]/60">
+      <div className="flex items-center gap-3 pl-2">
+        <Image src="/logo.png" alt="CodeTrail Logo" width={32} height={32} className="rounded-full" />
+        <span className="font-brand font-bold text-sm tracking-wide text-white">CodeTrail</span>
       </div>
-      <div className="flex items-center gap-4">
+
+      <button 
+        onClick={() => setPalette(true)}
+        className="hidden flex-1 max-w-sm items-center justify-between rounded-full border border-white/5 bg-white/[.03] px-4 py-1.5 text-xs text-zinc-500 transition-colors hover:bg-white/[.08] hover:text-zinc-300 md:flex"
+      >
+        <div className="flex items-center gap-2">
+          <Search size={14} />
+          <span>Search problems...</span>
+        </div>
+        <kbd className="rounded border border-white/[.05] bg-white/[.05] px-1.5 py-0.5 font-mono text-[9px]">⌘K</kbd>
+      </button>
+
+      <div className="flex items-center gap-3 pr-1">
         {!userId ? (
           <SignInButton mode="modal">
-            <button className="text-xs font-semibold px-4 py-2 rounded-lg bg-white/10 hover:bg-white/20 transition-colors">Sign In</button>
+            <button className="rounded-full bg-lime px-5 py-1.5 text-xs font-bold text-black transition-transform hover:scale-105 active:scale-95 shadow-[0_0_15px_rgba(155,255,46,0.3)]">Sign In</button>
           </SignInButton>
         ) : (
-          <UserButton appearance={{ elements: { avatarBox: "w-8 h-8 rounded-lg" } }} />
+          <UserButton appearance={{ elements: { avatarBox: "w-8 h-8 rounded-full ring-1 ring-white/10" } }} />
         )}
       </div>
     </header>
-    <main className="px-4 pb-10 pt-24 sm:px-6 lg:px-8 lg:pb-12 xl:px-10">{children}</main>
+    <main className="px-4 pb-10 pt-32 sm:px-6 lg:px-8 lg:pb-12 xl:px-10">{children}</main>
 
     {palette && <div className="fixed inset-0 z-50 flex items-start justify-center bg-black/70 px-4 pt-[12vh] backdrop-blur-sm animate-[fadeIn_0.15s_ease-out]" onMouseDown={() => setPalette(false)}>
       <div onMouseDown={(e) => e.stopPropagation()} className="w-full max-w-2xl overflow-hidden rounded-2xl border border-lime/20 bg-[#0b100d] shadow-[0_0_80px_rgba(155,255,46,.08)]">
