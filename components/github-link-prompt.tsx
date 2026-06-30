@@ -11,8 +11,8 @@ export function GitHubLinkPrompt() {
   useEffect(() => {
     if (!isLoaded || !user) return;
 
-    const hasGoogle = user.externalAccounts.some(acc => acc.provider === "oauth_google");
-    const hasGithub = user.externalAccounts.some(acc => acc.provider === "oauth_github");
+    const hasGoogle = user.externalAccounts.some(acc => String(acc.provider).includes("google"));
+    const hasGithub = user.externalAccounts.some(acc => String(acc.provider).includes("github"));
     
     // Check if the prompt has already been shown
     const hasSeenPrompt = localStorage.getItem("github_link_prompt_shown");
