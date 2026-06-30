@@ -137,7 +137,7 @@ export default function TemplatesPage() {
                 <button
                   key={t.id}
                   onClick={() => switchTemplate(t.id)}
-                  className={\`flex w-full items-center justify-between rounded-xl px-3 py-3 text-left transition-colors \${activeId === t.id ? "bg-lime/10 text-lime" : "text-zinc-400 hover:bg-white/[.03] hover:text-zinc-200"}\`}
+                  className={`flex w-full items-center justify-between rounded-xl px-3 py-3 text-left transition-colors ${activeId === t.id ? "bg-lime/10 text-lime" : "text-zinc-400 hover:bg-white/[.03] hover:text-zinc-200"}`}
                 >
                   <div className="flex items-center gap-3">
                     <FileCode2 size={16} className={activeId === t.id ? "text-lime" : "text-zinc-600"} />
