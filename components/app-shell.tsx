@@ -31,7 +31,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
   return <div className="min-h-screen">
     <header className="fixed top-6 left-1/2 z-40 flex w-[92%] max-w-4xl -translate-x-1/2 items-center justify-between rounded-full border border-white/10 bg-[#0a0f0c]/90 px-3 py-2 shadow-[0_12px_40px_rgba(0,0,0,0.6)] backdrop-blur-xl supports-[backdrop-filter]:bg-[#0a0f0c]/60">
       <div className="flex items-center gap-3 pl-2">
-        <Image src="/logo.png" alt="CodeTrail Logo" width={32} height={32} className="rounded-full" />
+        <Image src="/favicon.png" alt="CodeTrail Logo" width={32} height={32} className="rounded-md" />
         <span className="font-brand font-bold text-sm tracking-wide text-white">CodeTrail</span>
       </div>
 

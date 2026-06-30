@@ -71,7 +71,7 @@ export function ShareStats() {
           
           <div className="flex items-center justify-between border-b border-white/10 pb-6">
             <div className="flex items-center gap-3">
-              <Image src="/logo.png" alt="CodeTrail Logo" width={48} height={48} className="rounded-xl shadow-[0_0_20px_rgba(155,255,46,0.3)]" />
+              <Image src="/favicon.png" alt="CodeTrail Logo" width={56} height={56} className="rounded-xl shadow-[0_0_20px_rgba(155,255,46,0.2)]" />
               <div>
                 <h1 className="font-brand text-2xl font-bold tracking-wide text-white">CodeTrail</h1>
                 <p className="text-[11px] uppercase tracking-[0.2em] text-zinc-500">DSA Mastery Tracker</p>
