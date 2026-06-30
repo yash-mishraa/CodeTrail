@@ -1,6 +1,8 @@
 "use client";
 
 import dynamic from "next/dynamic";
+import { Suspense } from "react";
+import { useSearchParams } from "next/navigation";
 import { AppShell } from "@/components/app-shell";
 import { DashboardHero } from "@/components/dashboard-hero";
 import { ReviewQueue } from "@/components/review-queue";
@@ -26,23 +28,41 @@ const Achievements = dynamic(() => import("@/components/analytics-panel").then(m
 });
 
 export default function HomePage() {
+  return (
+    <Suspense fallback={<AppShell><Loading /></AppShell>}>
+      <DashboardContent />
+    </Suspense>
+  );
+}
+
+function DashboardContent() {
   const { hydrated } = useTracker();
+  const searchParams = useSearchParams();
+  const tab = searchParams.get("tab") || "overview";
   
   if (!hydrated) return <AppShell><Loading /></AppShell>;
 
   return (
     <AppShell>
       <div className="mx-auto max-w-[1480px] animate-[fadeIn_0.35s_ease-out]">
-        <DashboardHero />
-        <ReviewQueue />
-        <WeeklyInsights />
-        <PatternRoadmap />
-        <Activity />
-        <AnalyticsPanel />
-        <Achievements />
-        <footer className="border-t border-white/[.06] py-8 text-center text-[9px] uppercase tracking-[.2em] text-zinc-700">
-          <span className="font-brand">CodeTrail</span> // built for the long game
-        </footer>
+        {tab === "overview" && (
+          <>
+            <DashboardHero />
+            <ReviewQueue />
+            <WeeklyInsights />
+          </>
+        )}
+        
+        {tab === "roadmap" && <PatternRoadmap />}
+        
+        {tab === "analytics" && (
+          <>
+            <AnalyticsPanel />
+            <Activity />
+          </>
+        )}
+        
+        {tab === "achievements" && <Achievements />}
       </div>
     </AppShell>
   );
