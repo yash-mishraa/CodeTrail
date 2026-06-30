@@ -98,13 +98,13 @@ export default function LandingPage() {
         <div className={mounted ? "anim-fade-up delay-1000 mt-12 flex items-center justify-center gap-x-6" : "opacity-0"}>
           {!userId ? (
             <SignInButton mode="modal">
-              <button className="group relative inline-flex items-center justify-center gap-2 rounded-full bg-lime px-8 py-4 text-sm font-semibold text-black transition-all hover:bg-lime/90 hover:scale-105 hover:shadow-[0_0_40px_rgba(155,255,46,0.4)]">
-                Initialize System <Rocket size={16} className="transition-transform group-hover:translate-x-1" />
+              <button className="group relative inline-flex items-center justify-center gap-2 rounded-full bg-lime px-8 py-4 text-sm font-bold tracking-wide text-black transition-all hover:bg-lime/90 hover:scale-105 hover:shadow-[0_0_40px_rgba(155,255,46,0.4)]">
+                Initialize System
               </button>
             </SignInButton>
           ) : (
-            <Link href="/dashboard" className="group relative inline-flex items-center justify-center gap-2 rounded-full bg-lime px-8 py-4 text-sm font-semibold text-black transition-all hover:bg-lime/90 hover:scale-105 hover:shadow-[0_0_40px_rgba(155,255,46,0.4)]">
-              Access Dashboard <LayoutDashboard size={16} className="transition-transform group-hover:translate-x-1" />
+            <Link href="/dashboard" className="group relative inline-flex items-center justify-center gap-2 rounded-full bg-lime px-8 py-4 text-sm font-bold tracking-wide text-black transition-all hover:bg-lime/90 hover:scale-105 hover:shadow-[0_0_40px_rgba(155,255,46,0.4)]">
+              Access Dashboard
             </Link>
           )}
         </div>
