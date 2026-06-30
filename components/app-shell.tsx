@@ -32,7 +32,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
     <header className="fixed top-0 left-0 right-0 z-40 flex items-center justify-between px-6 py-4 bg-black/50 backdrop-blur-md border-b border-white/[.05]">
       <div className="flex items-center gap-2.5">
         <Image src="/logo.png" alt="CodeTrail Logo" width={40} height={40} className="rounded-lg" />
-        <span className="font-display font-bold text-base tracking-tight">CodeTrail</span>
+        <span className="font-brand font-bold text-base tracking-wide">CodeTrail</span>
       </div>
       <div className="flex items-center gap-4">
         {!userId ? (

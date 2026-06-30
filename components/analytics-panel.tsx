@@ -4,7 +4,7 @@ import { Award, Lock, Sparkles } from "lucide-react";
 import { Bar, BarChart, CartesianGrid, Cell, Pie, PieChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
 import { Card } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
-import { patternDifficultyCounts, patternLongestStreak, patternMonthData, patternSolvedProblems, patternStreak, patternCategoryProgress } from "@/lib/pattern-analytics";
+import { patternDifficultyCounts, patternLongestStreak, patternMonthData, patternSolvedProblems, patternStreak, patternCategoryProgress, completedPatternsCount } from "@/lib/pattern-analytics";
 import { useTracker } from "@/hooks/use-tracker";
 import { SectionHeading } from "@/components/roadmap";
 
@@ -36,20 +36,39 @@ export function AnalyticsPanel() {
 function ChartCard({ title, subtitle, className, children }: { title: string; subtitle: string; className?: string; children: React.ReactNode }) { return <Card className={className}><div className="flex items-start justify-between p-5 pb-1"><div><p className="text-sm font-semibold">{title}</p><p className="mt-1 text-[9px] uppercase tracking-wider text-zinc-700">{subtitle}</p></div><span className="size-1.5 rounded-full bg-lime shadow-[0_0_7px_#9BFF2E]" /></div><div className="px-5 pb-5">{children}</div></Card>; }
 function EmptyState() { return <div className="grid h-44 place-items-center text-center"><div><Sparkles size={18} className="mx-auto text-zinc-700" /><p className="mt-3 text-[10px] text-zinc-600">Solve your first problem<br />to light up this chart.</p></div></div>; }
 
-const badges = [
-  ["First Problem", "Complete one problem", 1, "any"], ["7 Day Streak", "Show up seven days", 7, "streak"], ["30 Day Streak", "Thirty days, unbroken", 30, "streak"],
-  ["50 Problems", "Cross the fifty mark", 50, "any"], ["100 Problems", "Enter triple digits", 100, "any"], ["Arrays Master", "Complete Phase 01", 1, "phase"],
-  ["Graph Explorer", "Complete Phase 08", 8, "phase"], ["DP Warrior", "Complete Phase 09", 9, "phase"],
-] as const;
+const badges: readonly [string, string, number, "any" | "streak" | "category" | "pattern"][] = [
+  ["First Blood", "Solve your first problem", 1, "any"],
+  ["7 Day Streak", "Show up seven days straight", 7, "streak"],
+  ["30 Day Streak", "Thirty days, unbroken", 30, "streak"],
+  ["50 Problems", "Cross the fifty mark", 50, "any"],
+  ["Century", "100 problems solved", 100, "any"],
+  ["250 Club", "A quarter thousand solved", 250, "any"],
+  ["500 Legend", "Complete every single problem", 500, "any"],
+  ["Pattern Apprentice", "Complete 10 patterns", 10, "pattern"],
+  ["Pattern Master", "Complete 40 patterns", 40, "pattern"],
+  ["Pattern Grandmaster", "Complete all 80 patterns", 80, "pattern"],
+  ["Category Clear", "Fully complete any 1 category", 1, "category"],
+  ["Half Map", "Complete 10 categories", 10, "category"],
+];
 
 export function Achievements() {
   const { state } = useTracker();
   if (!state.patternCategories) return null;
   const categories = state.patternCategories;
-  const solved = patternSolvedProblems(categories).length; 
-  const currentStreak = patternStreak(categories);
-  return <section id="achievements" className="scroll-mt-24 pb-10 pt-20"><SectionHeading eyebrow="Milestones" title="Achievements" copy="Quiet evidence of the person you are becoming, one deliberate repetition at a time." /><div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">{badges.map(([name, description, threshold, type]) => { 
-    const unlocked = type === "streak" ? currentStreak >= threshold : type === "phase" ? patternCategoryProgress(categories[threshold - 1]) >= 100 : solved >= threshold; 
-    return <Card key={name} className={`glass-highlight p-4 transition ${unlocked ? "border-lime/20 shadow-glow" : "opacity-55"}`}><div className="flex items-start gap-3"><div className={`grid size-10 shrink-0 place-items-center rounded-xl border ${unlocked ? "border-lime/25 bg-lime/10 text-lime" : "border-white/[.07] bg-white/[.025] text-zinc-700"}`}>{unlocked ? <Award size={18} /> : <Lock size={15} />}</div><div><p className="text-xs font-semibold">{name}</p><p className="mt-1 text-[9px] leading-4 text-zinc-600">{description}</p><p className={`mt-2 text-[8px] uppercase tracking-widest ${unlocked ? "text-lime" : "text-zinc-700"}`}>{unlocked ? "unlocked" : "locked"}</p></div></div></Card>; 
+  const solved = patternSolvedProblems(categories).length;
+  const currentStreakVal = patternStreak(categories);
+  const completedPats = completedPatternsCount(categories);
+  const completedCats = categories.filter(c => {
+    const all = c.patterns.flatMap(p => p.problems);
+    return all.length > 0 && all.every(p => p.completed);
+  }).length;
+
+  return <section id="achievements" className="scroll-mt-24 pb-10 pt-20"><SectionHeading eyebrow="Milestones" title="Achievements" copy="Quiet evidence of the person you are becoming, one deliberate repetition at a time." /><div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">{badges.map(([name, description, threshold, type]) => {
+    const unlocked = type === "streak" ? currentStreakVal >= threshold
+      : type === "pattern" ? completedPats >= threshold
+      : type === "category" ? completedCats >= threshold
+      : solved >= threshold;
+    return <Card key={name} className={`glass-highlight p-4 transition ${unlocked ? "border-lime/20 shadow-glow" : "opacity-55"}`}><div className="flex items-start gap-3"><div className={`grid size-10 shrink-0 place-items-center rounded-xl border ${unlocked ? "border-lime/25 bg-lime/10 text-lime" : "border-white/[.07] bg-white/[.025] text-zinc-700"}`}>{unlocked ? <Award size={18} /> : <Lock size={15} />}</div><div><p className="text-xs font-semibold">{name}</p><p className="mt-1 text-[9px] leading-4 text-zinc-600">{description}</p><p className={`mt-2 text-[8px] uppercase tracking-widest ${unlocked ? "text-lime" : "text-zinc-700"}`}>{unlocked ? "unlocked" : "locked"}</p></div></div></Card>;
   })}</div></section>;
 }
+

@@ -14,6 +14,7 @@ const config: Config = {
       fontFamily: {
         mono: ["var(--font-mono)", "JetBrains Mono", "Fira Code", "Cascadia Code", "Consolas", "monospace"],
         display: ["var(--font-display)", "Space Grotesk", "Inter", "system-ui", "sans-serif"],
+        brand: ["var(--font-brand)", "Orbitron", "system-ui", "sans-serif"],
       },
       boxShadow: {
         glow: "0 0 24px rgba(155,255,46,.10)",

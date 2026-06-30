@@ -3,7 +3,7 @@
 import dynamic from "next/dynamic";
 import { AppShell } from "@/components/app-shell";
 import { DashboardHero } from "@/components/dashboard-hero";
-import { UpNext } from "@/components/up-next";
+import { WeeklyInsights } from "@/components/weekly-insights";
 import { useTracker } from "@/hooks/use-tracker";
 
 // Lazy-load the heaviest sections (recharts, pattern data, markdown)
@@ -33,13 +33,13 @@ export default function HomePage() {
     <AppShell>
       <div className="mx-auto max-w-[1480px] animate-[fadeIn_0.35s_ease-out]">
         <DashboardHero />
-        <UpNext />
+        <WeeklyInsights />
         <PatternRoadmap />
         <Activity />
         <AnalyticsPanel />
         <Achievements />
         <footer className="border-t border-white/[.06] py-8 text-center text-[9px] uppercase tracking-[.2em] text-zinc-700">
-          CodeTrail // built for the long game
+          <span className="font-brand">CodeTrail</span> // built for the long game
         </footer>
       </div>
     </AppShell>
