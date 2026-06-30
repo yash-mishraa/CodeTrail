@@ -3,6 +3,7 @@
 import { useRef, useState } from "react";
 import html2canvas from "html2canvas";
 import { Share2, Network, CheckCircle2, Flame, Loader2 } from "lucide-react";
+import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { useTracker } from "@/hooks/use-tracker";
 import { patternSolvedProblems, patternStreak, completedPatternsCount, totalPatternsCount } from "@/lib/pattern-analytics";
@@ -70,9 +71,7 @@ export function ShareStats() {
           
           <div className="flex items-center justify-between border-b border-white/10 pb-6">
             <div className="flex items-center gap-3">
-              <div className="grid size-12 place-items-center rounded-xl bg-lime/10 shadow-[0_0_20px_rgba(155,255,46,0.3)]">
-                <span className="font-brand text-2xl font-black text-lime">CT</span>
-              </div>
+              <Image src="/logo.png" alt="CodeTrail Logo" width={48} height={48} className="rounded-xl shadow-[0_0_20px_rgba(155,255,46,0.3)]" />
               <div>
                 <h1 className="font-brand text-2xl font-bold tracking-wide text-white">CodeTrail</h1>
                 <p className="text-[11px] uppercase tracking-[0.2em] text-zinc-500">DSA Mastery Tracker</p>
@@ -101,10 +100,6 @@ export function ShareStats() {
               <p className="text-4xl font-bold tracking-tight text-white">{streak}<span className="text-lg text-zinc-600"> days</span></p>
               <p className="mt-1 text-[10px] uppercase tracking-widest text-zinc-500">Current Streak</p>
             </div>
-          </div>
-
-          <div className="mt-8 flex items-center justify-center pt-2">
-            <p className="text-[10px] font-medium tracking-widest text-zinc-600">codetrail.app</p>
           </div>
         </div>
       </div>

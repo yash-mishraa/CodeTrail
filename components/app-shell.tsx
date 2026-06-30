@@ -1,10 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { usePathname } from "next/navigation";
-import Link from "next/link";
-import { motion } from "framer-motion";
-import { Search, X, LayoutDashboard, Code2 } from "lucide-react";
+import { Search, X } from "lucide-react";
 import { SignInButton, UserButton, useAuth } from "@clerk/nextjs";
 import { useTracker } from "@/hooks/use-tracker";
 import Image from "next/image";
@@ -12,15 +9,9 @@ import Image from "next/image";
 export function AppShell({ children }: { children: React.ReactNode }) {
   const { state } = useTracker();
   const { userId } = useAuth();
-  const pathname = usePathname();
   const [palette, setPalette] = useState(false);
   const [query, setQuery] = useState("");
   const inputRef = useRef<HTMLInputElement>(null);
-
-  const tabs = [
-    { name: "Overview", path: "/dashboard", icon: LayoutDashboard },
-    { name: "Templates", path: "/dashboard/templates", icon: Code2 }
-  ];
 
   useEffect(() => {
     const handler = (event: KeyboardEvent) => {
@@ -38,41 +29,21 @@ export function AppShell({ children }: { children: React.ReactNode }) {
   const results = query ? problems.filter((p) => `${p.name} ${p.topic} ${p.phase.name}`.toLowerCase().includes(query.toLowerCase())).slice(0, 7) : problems.filter((p) => !p.completed).slice(0, 5);
 
   return <div className="min-h-screen">
-    <header className="fixed top-6 left-1/2 z-40 flex w-[96%] max-w-5xl -translate-x-1/2 items-center justify-between rounded-full border border-white/10 bg-[#0a0f0c]/90 px-3 py-2 shadow-[0_12px_40px_rgba(0,0,0,0.6)] backdrop-blur-xl supports-[backdrop-filter]:bg-[#0a0f0c]/60">
+    <header className="fixed top-6 left-1/2 z-40 flex w-[92%] max-w-4xl -translate-x-1/2 items-center justify-between rounded-full border border-white/10 bg-[#0a0f0c]/90 px-3 py-2 shadow-[0_12px_40px_rgba(0,0,0,0.6)] backdrop-blur-xl supports-[backdrop-filter]:bg-[#0a0f0c]/60">
       <div className="flex items-center gap-3 pl-2">
         <Image src="/logo.png" alt="CodeTrail Logo" width={32} height={32} className="rounded-full" />
-        <span className="font-brand font-bold text-sm tracking-wide text-white hidden sm:block">CodeTrail</span>
+        <span className="font-brand font-bold text-sm tracking-wide text-white">CodeTrail</span>
       </div>
 
-      <div className="hidden md:flex items-center gap-6 flex-1 justify-center">
-        {/* Animated Segmented Control */}
-        <div className="relative flex items-center rounded-full border border-white/[.05] bg-black/40 p-1">
-          {tabs.map((tab) => {
-            const active = pathname === tab.path;
-            return (
-              <Link key={tab.name} href={tab.path} className="relative z-10 flex items-center gap-2 px-5 py-1.5 text-[10px] font-bold uppercase tracking-widest transition-colors">
-                {active && (
-                  <motion.div
-                    layoutId="nav-pill"
-                    className="absolute inset-0 z-[-1] rounded-full border border-lime/30 bg-lime/10 shadow-[0_0_15px_rgba(155,255,46,0.2)]"
-                    transition={{ type: "spring", stiffness: 500, damping: 35 }}
-                  />
-                )}
-                <tab.icon size={12} className={active ? "text-lime" : "text-zinc-500"} />
-                <span className={active ? "text-white" : "text-zinc-500 hover:text-zinc-300"}>{tab.name}</span>
-              </Link>
-            );
-          })}
-        </div>
-
-        <button 
-          onClick={() => setPalette(true)}
-          className="flex items-center gap-2 rounded-full border border-white/5 bg-white/[.03] px-4 py-1.5 text-xs text-zinc-500 transition-colors hover:bg-white/[.08] hover:text-zinc-300"
-        >
+      <button 
+        onClick={() => setPalette(true)}
+        className="hidden flex-1 max-w-sm items-center justify-between rounded-full border border-white/5 bg-white/[.03] px-4 py-1.5 text-xs text-zinc-500 transition-colors hover:bg-white/[.08] hover:text-zinc-300 md:flex"
+      >
+        <div className="flex items-center gap-2">
           <Search size={14} />
-          <span>Search...</span>
-        </button>
-      </div>
+          <span>Search problems...</span>
+        </div>
+      </button>
 
       <div className="flex items-center gap-3 pr-1">
         {!userId ? (

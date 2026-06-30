@@ -3,7 +3,7 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useState } from "react";
 import { initialPhases } from "@/lib/roadmap";
 import { localProgressRepository } from "@/lib/storage";
-import { Problem, TrackerState, Template } from "@/lib/types";
+import { Problem, TrackerState } from "@/lib/types";
 import { PatternProblem, PatternCategory } from "@/lib/pattern-types";
 import { useAuth } from "@clerk/nextjs";
 import { supabase } from "@/lib/supabase";
@@ -16,9 +16,6 @@ type TrackerContextValue = {
   importState: (state: TrackerState) => boolean;
   updatePatternProblem: (categoryId: string, patternId: string, id: string, updates: Partial<PatternProblem>) => void;
   togglePatternProblem: (categoryId: string, patternId: string, id: string) => void;
-  addTemplate: (template: Template) => void;
-  updateTemplate: (id: string, updates: Partial<Template>) => void;
-  deleteTemplate: (id: string) => void;
 };
 
 // Start with empty pattern categories - they load lazily
@@ -183,28 +180,7 @@ export function TrackerProvider({ children }: { children: React.ReactNode }) {
     setState(next); return true;
   }, []);
 
-  const addTemplate = useCallback((template: Template) => {
-    setState((current) => ({
-      ...current,
-      templates: [...(current.templates || []), template],
-    }));
-  }, []);
-
-  const updateTemplate = useCallback((id: string, updates: Partial<Template>) => {
-    setState((current) => ({
-      ...current,
-      templates: (current.templates || []).map((t) => (t.id === id ? { ...t, ...updates } : t)),
-    }));
-  }, []);
-
-  const deleteTemplate = useCallback((id: string) => {
-    setState((current) => ({
-      ...current,
-      templates: (current.templates || []).filter((t) => t.id !== id),
-    }));
-  }, []);
-
-  const value = useMemo(() => ({ state, hydrated, updateProblem, toggleProblem, importState, updatePatternProblem, togglePatternProblem, addTemplate, updateTemplate, deleteTemplate }), [state, hydrated, updateProblem, toggleProblem, importState, updatePatternProblem, togglePatternProblem, addTemplate, updateTemplate, deleteTemplate]);
+  const value = useMemo(() => ({ state, hydrated, updateProblem, toggleProblem, importState, updatePatternProblem, togglePatternProblem }), [state, hydrated, updateProblem, toggleProblem, importState, updatePatternProblem, togglePatternProblem]);
   return <TrackerContext.Provider value={value}>{children}</TrackerContext.Provider>;
 }
 
