@@ -4,7 +4,7 @@ import { useState } from "react";
 import { AppShell } from "@/components/app-shell";
 import { useTracker } from "@/hooks/use-tracker";
 import { Template } from "@/lib/types";
-import { Plus, Trash2, Code2, Save, FileCode2 } from "lucide-react";
+import { Plus, Trash2, Code2, Save, FileCode2, Search } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 
