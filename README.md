@@ -1,237 +1,139 @@
+# CodeTrail — Master DSA with Precision
+
 <div align="center">
-
-# 🛤️ CodeTrail
-
-### Master DSA with Precision
-
-[![Live Demo](https://img.shields.io/badge/▶_Live_Demo-code--trail--indol.vercel.app-9BFF2E?style=for-the-badge&logo=vercel&logoColor=white)](https://code-trail-indol.vercel.app/)
-[![Next.js](https://img.shields.io/badge/Next.js_15-black?style=for-the-badge&logo=next.js&logoColor=white)](https://nextjs.org/)
-[![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+  
+[![Next.js](https://img.shields.io/badge/Next.js-15-black?style=for-the-badge&logo=next.js)](https://nextjs.org/)
+[![React](https://img.shields.io/badge/React-19-61DAFB?style=for-the-badge&logo=react&logoColor=black)](https://react.dev/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.8-3178C6?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind-3.4-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
 [![Supabase](https://img.shields.io/badge/Supabase-3FCF8E?style=for-the-badge&logo=supabase&logoColor=white)](https://supabase.com/)
-[![Clerk](https://img.shields.io/badge/Clerk_Auth-6C47FF?style=for-the-badge&logo=clerk&logoColor=white)](https://clerk.com/)
+[![Clerk](https://img.shields.io/badge/Clerk-Auth-6C47FF?style=for-the-badge&logo=clerk&logoColor=white)](https://clerk.com/)
 
-**The ultimate, intelligence-driven LeetCode progress tracker.**
-**500+ problems • 80+ structural patterns • 20 categories • Real-time cloud sync**
+**[Visit CodeTrail](https://codetrailapp.site)** • **[View Roadmap](/dashboard?tab=roadmap)** • **[Analytics](/dashboard?tab=analytics)**
 
 </div>
 
----
+<br/>
 
-## ✨ Features
+CodeTrail is an elite, highly optimized Data Structures and Algorithms tracking platform designed to guide developers through a structured curriculum of 580+ curated problems across 97 learning patterns. Built for speed and focus, it eliminates the noise of traditional coding platforms and provides a clear path to mastery.
 
-### 📊 Intelligent Dashboard
-- **Pattern-first approach** — Problems are organized by 80+ structural patterns across 20 DSA categories, not just random lists
-- **Real-time analytics** — Difficulty breakdown, weekly stats, streak tracking, category progress, and focus area analysis
-- **Interactive charts** — Monthly progress bars, difficulty distribution pie charts, and topic heatmaps powered by Recharts
-- **Achievement system** — 12 unlockable milestones across problems solved, patterns mastered, streaks, and category completions
+## 🚀 Features
 
-### 🧠 Pattern Roadmap
-- **20 DSA categories**: Arrays, Strings, Linked Lists, Stacks, Queues, Trees, Graphs, DP, Binary Search, Backtracking, Recursion, Greedy, Heaps, Hashing, Bit Manipulation, Tries, Segment Trees, Union-Find, Math, and Advanced DS
-- **Theory guides** — Every pattern includes a "How to solve" section with markdown-rendered explanations, code snippets, and complexity analysis
-- **Problem levels** — Problems within each pattern are grouped by level: Basic → Standard → Pattern → Mixed → Interview → Challenge
-- **Filter & search** — Filter by difficulty, completion status, or bookmarks. Use `Ctrl+K` to instantly search across all problems
-
-### 🔐 Authentication & Cloud Sync
-- **Clerk authentication** — Sign in with GitHub or Google in one click
-- **Supabase real-time sync** — Progress automatically syncs to the cloud, accessible from any device
-- **Local-first architecture** — Works offline with `localStorage`, syncs to cloud when connected
-- **Debounced saves** — Intelligent 1-second debounce prevents excessive database writes
-
-### 🎨 Premium Design
-- **Dark theme** — Meticulously crafted dark UI with glassmorphism, glow effects, and subtle grid backgrounds
-- **Custom typography** — Orbitron for branding, Space Grotesk for headings, JetBrains Mono for code
-- **Confetti celebrations** — Solving a problem triggers a satisfying confetti animation
-- **Responsive** — Fully optimized for desktop, tablet, and mobile
+- **Structured Roadmap** — Follow a mathematically optimal progression through 97 core algorithmic patterns.
+- **Client-First Architecture** — Lightning fast hydration utilizing Next.js 15 Server Components and Zustand for instant state updates.
+- **Cloud Sync** — Real-time progress synchronization powered by Supabase and Clerk Auth.
+- **Advanced Analytics** — Track your completion rate, pattern mastery, and recent activity streaks using Recharts.
+- **PWA Ready** — Fully installable as a Progressive Web App with offline fallback support via Serwist.
+- **Accessible & Responsive** — >95 Lighthouse accessibility score with full keyboard navigation and ARIA support.
 
 ---
 
-## 🛠️ Tech Stack
+## 🏗 Architecture
 
-| Layer | Technology |
-|-------|-----------|
-| **Framework** | Next.js 15 (App Router, Turbopack) |
-| **Language** | TypeScript |
-| **Styling** | Tailwind CSS 3 + custom design tokens |
-| **UI Components** | Radix UI primitives (Dialog, Dropdown, Progress, Tabs) |
-| **Charts** | Recharts |
-| **Markdown** | react-markdown + remark-gfm (lazy-loaded) |
-| **Animations** | CSS keyframes + Framer Motion (lazy-loaded) |
-| **Auth** | Clerk |
-| **Database** | Supabase (PostgreSQL) |
-| **Deployment** | Vercel |
-| **Fonts** | Google Fonts (Orbitron, Space Grotesk, JetBrains Mono) |
+CodeTrail utilizes a modern **React Server Components** paradigm combined with a **BaaS (Backend-as-a-Service)** data layer.
+
+- **Frontend:** Next.js 15 (App Router), React 19, Tailwind CSS
+- **State Management:** Zustand (with local persistence)
+- **Authentication:** Clerk
+- **Database:** Supabase (PostgreSQL)
+- **Security:** Strict CSP headers, Row Level Security (RLS) via injected Clerk JWTs
+- **Deployment:** Vercel
 
 ---
 
-## 🚀 Getting Started
+## 📦 Installation Guide
 
-### Prerequisites
-- Node.js 18+
-- npm or yarn
-- A [Clerk](https://clerk.com) account (free tier)
-- A [Supabase](https://supabase.com) project (free tier)
+To run CodeTrail locally, follow these steps:
 
-### 1. Clone the repo
-
+### 1. Clone the repository
 ```bash
 git clone https://github.com/yash-mishraa/CodeTrail.git
 cd CodeTrail
 ```
 
 ### 2. Install dependencies
-
 ```bash
-npm install --legacy-peer-deps
+npm install
 ```
 
-### 3. Set up environment variables
-
-Create a `.env.local` file in the root directory:
+### 3. Configure Environment Variables
+Copy the `.env.example` file to `.env.local` (or create it) and fill in the following keys:
 
 ```env
-NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=pk_test_your_key_here
-CLERK_SECRET_KEY=sk_test_your_key_here
-
-NEXT_PUBLIC_SUPABASE_URL=https://your-project.supabase.co
-NEXT_PUBLIC_SUPABASE_ANON_KEY=your_anon_key_here
-
+# Clerk Authentication
+NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=pk_test_...
+CLERK_SECRET_KEY=sk_test_...
 NEXT_PUBLIC_CLERK_SIGN_IN_FORCE_REDIRECT_URL=/dashboard
 NEXT_PUBLIC_CLERK_SIGN_UP_FORCE_REDIRECT_URL=/dashboard
+
+# Supabase Database
+NEXT_PUBLIC_SUPABASE_URL=https://your-project.supabase.co
+NEXT_PUBLIC_SUPABASE_ANON_KEY=eyJ...
 ```
 
-### 4. Set up Supabase database
-
-Go to your Supabase project → SQL Editor → Run this query:
+### 4. Setup Database
+Execute the following SQL in your Supabase SQL Editor to configure the database schema and Row Level Security:
 
 ```sql
-CREATE TABLE public.user_progress (
-  user_id TEXT PRIMARY KEY,
-  state JSONB NOT NULL,
-  updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+CREATE TABLE user_progress (
+  user_id text PRIMARY KEY,
+  state jsonb NOT NULL,
+  updated_at timestamp with time zone DEFAULT now()
 );
+
+-- Enable RLS
+ALTER TABLE user_progress ENABLE ROW LEVEL SECURITY;
+
+-- Allow users to manage their own data via Clerk JWT
+CREATE POLICY "Users can view their own progress" 
+ON user_progress FOR SELECT USING ((auth.jwt() ->> 'sub') = user_id);
+
+CREATE POLICY "Users can update their own progress" 
+ON user_progress FOR ALL USING ((auth.jwt() ->> 'sub') = user_id);
 ```
 
-### 5. Run the development server
-
+### 5. Start the development server
 ```bash
 npm run dev
 ```
-
-Open [http://localhost:3000](http://localhost:3000) and sign in to access the dashboard.
-
----
-
-## 📁 Project Structure
-
-```
-CodeTrail/
-├── app/
-│   ├── layout.tsx              # Root layout (Clerk, fonts, metadata)
-│   ├── page.tsx                # Landing page (animated hero)
-│   ├── globals.css             # Global styles & design tokens
-│   └── dashboard/
-│       ├── layout.tsx          # Dashboard layout (TrackerProvider)
-│       └── page.tsx            # Main dashboard (lazy-loaded sections)
-├── components/
-│   ├── app-shell.tsx           # Navbar, command palette (Ctrl+K)
-│   ├── dashboard-hero.tsx      # Stats cards, current focus, difficulty split
-│   ├── weekly-insights.tsx     # Difficulty breakdown, quick stats, focus areas
-│   ├── pattern-roadmap.tsx     # Full 20-category pattern browser
-│   ├── pattern-card.tsx        # Expandable pattern with theory & problems
-│   ├── pattern-problem-card.tsx# Individual problem toggle card
-│   ├── activity.tsx            # Heatmap + recent activity
-│   ├── analytics-panel.tsx     # Charts + achievements
-│   └── ui/                     # Reusable primitives (Card, Badge, Progress...)
-├── hooks/
-│   └── use-tracker.tsx         # Global state (React Context + Supabase sync)
-├── lib/
-│   ├── patterns/               # 20 category files with theory & problems
-│   ├── pattern-types.ts        # TypeScript types for the pattern system
-│   ├── pattern-analytics.ts    # Analytics, streaks, heatmaps, difficulty counts
-│   ├── roadmap.ts              # Phase-based problem definitions
-│   ├── storage.ts              # localStorage adapter
-│   ├── supabase.ts             # Supabase client
-│   └── types.ts                # Core TypeScript types
-├── middleware.ts               # Clerk auth middleware
-├── public/
-│   ├── logo.png                # Brand logo
-│   ├── favicon.png             # Browser favicon
-│   └── og-image.png            # Social media preview
-└── .env.local                  # Environment variables (not tracked)
-```
+Navigate to `http://localhost:3000` to view the application.
 
 ---
 
-## ⌨️ Keyboard Shortcuts
+## 🌍 Deployment Guide
 
-| Shortcut | Action |
-|----------|--------|
-| `Ctrl/⌘ + K` | Open command palette |
-| `Esc` | Close command palette / modals |
+CodeTrail is optimized for deployment on Vercel.
 
----
-
-## 🏆 Achievement System
-
-| Badge | Requirement |
-|-------|------------|
-| 🩸 First Blood | Solve 1 problem |
-| 🔥 7 Day Streak | 7 consecutive days |
-| 💪 30 Day Streak | 30 consecutive days |
-| ⭐ 50 Problems | 50 problems solved |
-| 💯 Century | 100 problems solved |
-| 🏅 250 Club | 250 problems solved |
-| 👑 500 Legend | All 500+ problems solved |
-| 📐 Pattern Apprentice | 10 patterns completed |
-| 🧩 Pattern Master | 40 patterns completed |
-| 🏛️ Pattern Grandmaster | All 80 patterns completed |
-| ✅ Category Clear | 1 full category completed |
-| 🗺️ Half Map | 10 categories completed |
+1. Push your code to a GitHub repository.
+2. Import the project into Vercel.
+3. In the Vercel dashboard, go to **Settings > Environment Variables** and add all the keys from your `.env.local` file.
+4. (Optional) Configure the Clerk JWT Template: In Clerk, go to **Configure > JWT Templates**, create a new `supabase` template, and paste your Supabase Legacy JWT Secret into the Custom Signing Key field.
+5. Click **Deploy**.
 
 ---
 
-## 📊 Data Architecture
+## 🤝 Contribution Guide
 
-```
-User signs in (Clerk) 
-    → TrackerProvider loads state
-        → Check Supabase for cloud data
-        → Fallback to localStorage
-        → Merge progress with latest static data (preserves theory updates)
-    → On state change
-        → Save to localStorage (instant)
-        → Debounced upsert to Supabase (1s delay)
-```
+We welcome contributions! Please follow these steps:
+1. Fork the repository.
+2. Create a new feature branch (`git checkout -b feature/amazing-feature`).
+3. Commit your changes (`git commit -m 'Add amazing feature'`).
+4. Push to the branch (`git push origin feature/amazing-feature`).
+5. Open a Pull Request.
 
-**Key design decisions:**
-- **Local-first**: The app works fully offline. Cloud sync is additive, not required.
-- **Merge, don't replace**: When loading saved progress, it merges user checkmarks with the latest code-defined theory/descriptions. This means deploying new theory content never erases user progress.
-- **Lazy loading**: Pattern data (200KB+) is loaded via dynamic imports to keep initial page load fast.
+Please ensure you run `npm run lint` and `npm run build` before submitting your PR to ensure type safety and performance standards are met.
 
 ---
 
-## 🌐 Deployment
-
-The app is deployed on **Vercel** with automatic deployments on push to `main`.
-
-### Environment Variables on Vercel
-
-Add the same 6 variables from `.env.local` to your Vercel project:
-
-**Settings → Environment Variables** → Add each key-value pair for Production, Preview, and Development.
-
----
-
-## 📄 License
-
-This project is open source and available under the [MIT License](LICENSE).
+## 📝 Release Notes (v1.0.0)
+- **Launch Release:** Complete architectural overhaul to Next.js 15.
+- **Performance:** Enabled Babel React Compiler for aggressive auto-memoization.
+- **Security:** Implemented robust HTTP security headers and strictly enforced Supabase RLS using Clerk JWT injection.
+- **UX:** Total accessibility overhaul (Focus outlines, semantic HTML) and integration of Vercel Analytics.
+- **PWA:** Added Serwist service workers for offline caching and installability.
 
 ---
 
 <div align="center">
-
-**Built with ☕ and persistence by [Yash Mishra](https://github.com/yash-mishraa)**
-
-*"Small commits. Serious momentum."*
-
+  <p>&copy; 2026 CodeTrail. Not affiliated with LeetCode.</p>
 </div>

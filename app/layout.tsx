@@ -1,6 +1,8 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import { ClerkProvider } from '@clerk/nextjs'
+import { Analytics } from "@vercel/analytics/react"
+import { SpeedInsights } from "@vercel/speed-insights/next"
 import { Space_Grotesk, JetBrains_Mono, Orbitron } from 'next/font/google';
 
 const spaceGrotesk = Space_Grotesk({
@@ -99,6 +101,8 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
             dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
           />
           {children}
+          <Analytics />
+          <SpeedInsights />
         </body>
       </html>
     </ClerkProvider>

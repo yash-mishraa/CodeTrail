@@ -79,7 +79,7 @@ export function Footer() {
                     All systems operational
                   </li>
                   <li className="flex items-center gap-2 text-zinc-500">
-                    v2.4.1 (Stable Build)
+                    v1.0.0 (Launch Release)
                   </li>
                 </ul>
               </div>
