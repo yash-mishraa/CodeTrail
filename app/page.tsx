@@ -65,8 +65,8 @@ export default function LandingPage() {
       <div className="relative mx-auto flex max-w-7xl flex-col items-center justify-center min-h-screen px-6 py-24 sm:py-32 lg:px-8 text-center">
         
         <div className={mounted ? "anim-fade-up mb-8 flex items-center justify-center gap-3" : "opacity-0 mb-8"}>
-          <div className="grid size-16 place-items-center rounded-2xl shadow-[0_0_30px_rgba(155,255,46,0.2)]">
-            <Image src="/favicon.png" alt="CodeTrail Logo" width={64} height={64} className="rounded-2xl" />
+          <div className="grid size-16 place-items-center rounded-2xl bg-[#0a0f0c] text-lime text-2xl font-black font-mono shadow-[0_0_30px_rgba(155,255,46,0.2)] border border-lime/20">
+            {">_"}
           </div>
         </div>
 

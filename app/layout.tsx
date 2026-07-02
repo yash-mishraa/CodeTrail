@@ -40,10 +40,6 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "/",
   },
-  icons: {
-    icon: "/favicon.png",
-    apple: "/favicon.png",
-  },
   openGraph: {
     type: "website",
     locale: "en_US",
@@ -51,13 +47,11 @@ export const metadata: Metadata = {
     siteName: "CodeTrail",
     title: "CodeTrail — Master DSA with Precision",
     description: "Master Data Structures & Algorithms through a structured roadmap of 580+ curated problems across 97 learning patterns.",
-    images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "CodeTrail — Master DSA with Precision" }],
   },
   twitter: {
     card: "summary_large_image",
     title: "CodeTrail — Master DSA with Precision",
     description: "Master Data Structures & Algorithms through a structured roadmap of 580+ curated problems across 97 learning patterns.",
-    images: ["/og-image.png"],
   },
 };
 
