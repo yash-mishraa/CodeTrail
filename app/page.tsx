@@ -3,8 +3,8 @@
 import { Terminal, Code2, Rocket, Database, LayoutDashboard } from "lucide-react";
 import { SignInButton, useAuth } from "@clerk/nextjs";
 import Link from "next/link";
-import Image from "next/image";
 import { useEffect, useState } from "react";
+import { Footer } from "@/components/footer";
 
 const codeSnippet = `const CodeTrail = {
   status: "Optimized",
@@ -117,6 +117,7 @@ export default function LandingPage() {
           <div className="flex items-center gap-2"><Terminal size={16} /> 100% Secure</div>
         </div>
       </div>
+      <Footer />
     </div>
   );
 }

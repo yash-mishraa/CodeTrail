@@ -47,7 +47,7 @@ export function PatternProblemCard({
           aria-label={problem.completed ? "Mark incomplete" : "Mark complete"}
           onClick={() => togglePatternProblem(categoryId, patternId, problem.id)}
           className={cn(
-            "grid size-6 shrink-0 place-items-center rounded-md border transition-all",
+            "grid size-6 shrink-0 place-items-center rounded-md border transition-all active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-lime",
             problem.completed
               ? "border-lime bg-lime text-black shadow-[0_0_12px_rgba(155,255,46,.25)]"
               : "border-white/15 text-transparent hover:border-lime/50"
@@ -80,24 +80,24 @@ export function PatternProblemCard({
         </div>
         <div className="flex items-center gap-1">
           <button
-            aria-label="Favorite"
+            aria-label={problem.favorite ? "Remove from favorites" : "Add to favorites"}
             onClick={() => updatePatternProblem(categoryId, patternId, problem.id, { favorite: !problem.favorite })}
-            className="grid size-8 place-items-center text-zinc-700 transition hover:text-amber-300"
+            className="grid size-8 place-items-center rounded-md text-zinc-700 transition hover:text-amber-300 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-300"
           >
             <Star size={14} className={problem.favorite ? "fill-amber-300 text-amber-300" : ""} />
           </button>
           <a
-            aria-label="Open LeetCode"
+            aria-label="Open LeetCode problem"
             href={problem.leetcodeUrl}
             target="_blank"
-            className="grid size-8 place-items-center text-zinc-700 transition hover:text-lime"
+            className="grid size-8 place-items-center rounded-md text-zinc-700 transition hover:text-lime active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-lime"
           >
             <ExternalLink size={14} />
           </a>
           <button
-            aria-label="Problem details"
+            aria-label={expanded ? "Collapse problem details" : "Expand problem details"}
             onClick={() => setExpanded(!expanded)}
-            className="grid size-8 place-items-center text-zinc-700 hover:text-white"
+            className="grid size-8 place-items-center rounded-md text-zinc-700 transition hover:text-white active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
           >
             <ChevronDown size={14} className={cn("transition-transform", expanded && "rotate-180")} />
           </button>
@@ -142,7 +142,8 @@ export function PatternProblemCard({
                     <Button
                       size="icon"
                       variant="outline"
-                      className="size-8"
+                      aria-label="Decrease revisions"
+                      className="size-8 focus-visible:ring-2 focus-visible:ring-lime focus-visible:ring-offset-1 focus-visible:ring-offset-black"
                       onClick={() =>
                         updatePatternProblem(categoryId, patternId, problem.id, {
                           revisions: Math.max(0, problem.revisions - 1),
@@ -157,7 +158,8 @@ export function PatternProblemCard({
                     <Button
                       size="icon"
                       variant="outline"
-                      className="size-8"
+                      aria-label="Increase revisions"
+                      className="size-8 focus-visible:ring-2 focus-visible:ring-lime focus-visible:ring-offset-1 focus-visible:ring-offset-black"
                       onClick={() =>
                         updatePatternProblem(categoryId, patternId, problem.id, { revisions: problem.revisions + 1 })
                       }
@@ -182,8 +184,8 @@ export function PatternProblemCard({
                     />
                   </div>
                   {problem.githubUrl && (
-                    <a href={problem.githubUrl} target="_blank">
-                      <Button size="sm" variant="outline">
+                    <a href={problem.githubUrl} target="_blank" aria-label="Open GitHub solution in new tab" className="focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-lime rounded-md">
+                      <Button size="sm" variant="outline" tabIndex={-1}>
                         Open
                       </Button>
                     </a>

@@ -60,7 +60,9 @@ export function PatternCard({
     <Card className={cn("overflow-hidden transition-all", open && "border-white/[.11] shadow-glow")}>
       <button
         onClick={() => setOpen(!open)}
-        className="flex w-full flex-col gap-4 p-4 text-left sm:flex-row sm:items-center sm:p-5"
+        aria-expanded={open}
+        aria-controls={`pattern-content-${pattern.id}`}
+        className="flex w-full flex-col gap-4 p-4 text-left sm:flex-row sm:items-center sm:p-5 focus-visible:outline-none focus-visible:bg-white/[.02] focus-visible:ring-2 focus-visible:ring-lime focus-visible:ring-inset"
       >
         <div className="min-w-0 flex-1">
           <div className="flex flex-wrap items-center gap-2">
@@ -92,6 +94,7 @@ export function PatternCard({
       <AnimatePresence initial={false}>
         {open && (
           <motion.div
+            id={`pattern-content-${pattern.id}`}
             initial={{ height: 0, opacity: 0 }}
             animate={{ height: "auto", opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
