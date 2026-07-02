@@ -6,7 +6,7 @@ import { localProgressRepository } from "@/lib/storage";
 import { Problem, TrackerState } from "@/lib/types";
 import { PatternProblem, PatternCategory } from "@/lib/pattern-types";
 import { useAuth } from "@clerk/nextjs";
-import { supabase } from "@/lib/supabase";
+import { supabase, getSupabaseClient } from "@/lib/supabase";
 
 type TrackerContextValue = {
   state: TrackerState;
@@ -72,7 +72,7 @@ export function TrackerProvider({ children }: { children: React.ReactNode }) {
   const [state, setState] = useState(initialState);
   const [hydrated, setHydrated] = useState(false);
 
-  const { userId } = useAuth();
+  const { userId, getToken } = useAuth();
   
   useEffect(() => {
     const loadState = async () => {
@@ -81,9 +81,21 @@ export function TrackerProvider({ children }: { children: React.ReactNode }) {
       
       let loadedState: TrackerState | null = null;
       if (userId) {
-        const { data, error } = await supabase.from("user_progress").select("state").eq("user_id", userId).single();
-        if (!error && data?.state) {
-          loadedState = data.state as TrackerState;
+        try {
+          // Attempt to securely identify the user to Supabase RLS using the Clerk JWT
+          const token = await getToken({ template: "supabase" });
+          const client = token ? getSupabaseClient(token) : supabase;
+          const { data, error } = await client.from("user_progress").select("state").eq("user_id", userId).single();
+          if (!error && data?.state) {
+            loadedState = data.state as TrackerState;
+          }
+        } catch (err) {
+          // Fallback to anon query if JWT template is not configured (graceful degradation)
+          console.warn("Supabase JWT template not found. Falling back to anon client.");
+          const { data, error } = await supabase.from("user_progress").select("state").eq("user_id", userId).single();
+          if (!error && data?.state) {
+            loadedState = data.state as TrackerState;
+          }
         }
       }
       
@@ -114,11 +126,21 @@ export function TrackerProvider({ children }: { children: React.ReactNode }) {
     
     if (userId) {
       const sync = async () => {
-        await supabase.from("user_progress").upsert({
-          user_id: userId,
-          state: state,
-          updated_at: new Date().toISOString()
-        });
+        try {
+          const token = await getToken({ template: "supabase" });
+          const client = token ? getSupabaseClient(token) : supabase;
+          await client.from("user_progress").upsert({
+            user_id: userId,
+            state: state,
+            updated_at: new Date().toISOString()
+          });
+        } catch (err) {
+          await supabase.from("user_progress").upsert({
+            user_id: userId,
+            state: state,
+            updated_at: new Date().toISOString()
+          });
+        }
       };
       
       const timeoutId = setTimeout(sync, 1000);
